@@ -1,21 +1,22 @@
+cat > src/worker.ts <<'EOF'
 import { Worker } from '@temporalio/worker';
 
-// The worker is a long-lived process that polls a Task Queue and runs workflows/activities.
+/** Register activities by file path. We’ll add real ones later. */
 async function run() {
   const taskQueue = process.env.TEMPORAL_TASK_QUEUE || 'sms-orchestrator';
 
   const worker = await Worker.create({
-    // This loads workflows from the compiled JS file generated from src/workflows.ts
     workflowsPath: require.resolve('./workflows'),
-    activities: require('./activities'), // optional; ok even if empty
+    activities: require('./activities'),
     taskQueue,
   });
 
-  console.log(`[worker] starting. Task Queue: ${taskQueue}`);
-  await worker.run(); // blocks
+  console.log(`✅ Worker started on task queue: ${taskQueue} (namespace via .env)`);
+  await worker.run();
 }
 
 run().catch((err) => {
-  console.error('[worker] fatal:', err);
+  console.error('Worker failed:', err);
   process.exit(1);
 });
+EOF
