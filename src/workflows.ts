@@ -1,5 +1,9 @@
-cat > src/workflows.ts <<'EOF'
-export async function helloWorkflow(name: string): Promise<string> {
-  return `Workflow says: pong: hello, ${name}`;
+import { proxyActivities } from '@temporalio/workflow';
+
+const { ping } = proxyActivities<{ ping(msg: string): Promise<string> }>({
+  startToCloseTimeout: '1 minute',
+});
+
+export async function testWorkflow(name: string): Promise<string> {
+  return await ping(`hello ${name}`);
 }
-EOF
