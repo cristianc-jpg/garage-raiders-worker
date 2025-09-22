@@ -1,4 +1,3 @@
-// src/worker.ts
 import { Worker } from '@temporalio/worker';
 import { Connection } from '@temporalio/client';
 import * as activities from './activities';
