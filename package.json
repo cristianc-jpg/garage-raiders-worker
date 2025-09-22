@@ -1,21 +1,14 @@
 {
   "name": "garage-raiders-worker",
   "version": "1.0.0",
-  "private": true,
-  "type": "commonjs",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "dev": "dotenv -e .env ts-node src/worker.ts",
-    "start": "node dist/worker.js",
-    "start:wf": "dotenv -e .env ts-node src/start.ts"
+    "start:worker": "dotenv -e .env -- ts-node src/worker.ts",
+    "start:client": "dotenv -e .env -- ts-node src/client.ts"
   },
-  "dependencies": {
-    "@temporalio/client": "^1.9.0",
-    "@temporalio/worker": "^1.9.0"
-  },
-  "devDependencies": {
-    "ts-node": "^10.9.2",
-    "typescript": "^5.6.3",
-    "dotenv-cli": "^7.3.0"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
