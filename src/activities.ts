@@ -1,6 +1,4 @@
-cat > src/activities.ts <<'EOF'
-/** Placeholder activities file; add real ones later. */
-export async function noop(): Promise<string> {
-  return 'ok';
+export async function ping(msg: string): Promise<string> {
+  console.log('activity ping:', msg);
+  return `pong: ${msg}`;
 }
-EOF
