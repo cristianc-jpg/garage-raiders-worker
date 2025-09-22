@@ -14,7 +14,7 @@ async function main() {
   const conn = await Connection.connect({
     address,
     tls: {},
-    // API key via headers (works across SDK versions)
+    // Works across SDK versions:
     metadata: { authorization: `Bearer ${apiKey}` },
   });
 
