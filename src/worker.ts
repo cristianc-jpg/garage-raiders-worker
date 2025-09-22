@@ -21,8 +21,8 @@ async function run() {
   });
 
   const worker = await Worker.create({
-    connection,
-    namespace,
+    connection,      // <— critical
+    namespace,       // <— critical
     taskQueue,
     workflowsPath: require.resolve('./workflows'),
     activities,
