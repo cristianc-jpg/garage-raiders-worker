@@ -1,4 +1,3 @@
-// src/check.ts
 import { Connection } from '@temporalio/client';
 
 async function main() {
@@ -15,7 +14,7 @@ async function main() {
   const conn = await Connection.connect({
     address,
     tls: {},
-    // Older SDKs use metadata for API key auth:
+    // API key via headers (works across SDK versions)
     metadata: { authorization: `Bearer ${apiKey}` },
   });
 
