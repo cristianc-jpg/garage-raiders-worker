@@ -1,5 +1,6 @@
 // ~/garage-raiders-worker/src/worker.ts
-import { NativeConnection, Worker } from '@temporalio/worker';
+import { Worker } from '@temporalio/worker';
+import { Connection } from '@temporalio/client';
 import path from 'path';
 
 async function run() {
@@ -12,25 +13,27 @@ async function run() {
     throw new Error('Missing TEMPORAL_ADDRESS / TEMPORAL_NAMESPACE / TEMPORAL_API_KEY in env');
   }
 
-  console.log(
-    `Connecting to Temporal Cloud: addr=${address} ns=${namespace} tq=${taskQueue}`
-  );
+  console.log(`Connecting to Temporal Cloud:
+  address   = ${address}
+  namespace = ${namespace}
+  taskQueue = ${taskQueue}
+  `);
 
-  // IMPORTANT: pass address + TLS + API key auth, otherwise it defaults to localhost
-  const connection = await NativeConnection.connect({
+  // ✅ Use the Cloud-friendly Connection API with TLS + API key auth
+  const connection = await Connection.connect({
     address,
-    tls: {}, // enable TLS (required for Cloud)
-    metadata: { authorization: `Bearer ${apiKey}` }, // API key auth
+    tls: {},                           // required for Cloud
+    auth: { type: 'apiKey', apiKey },  // first-class API key auth
   });
 
-  // point to your compiled workflow bundle (Temporal SDK bundles automatically)
-  const workflowsPath = path.join(__dirname, './workflows'); // ts-node will use the source
+  const workflowsPath = path.join(__dirname, './workflows');
+
   const worker = await Worker.create({
     connection,
     namespace,
     taskQueue,
-    workflowsPath,           // loads workflows.ts
-    activities: require('./activities'), // loads activities.ts (CommonJS require under ts-node)
+    workflowsPath,                 // loads ./src/workflows.ts
+    activities: require('./activities'), // loads ./src/activities.ts
   });
 
   console.log('👷 Worker started on task queue:', taskQueue);
