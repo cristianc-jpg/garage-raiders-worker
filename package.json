@@ -4,11 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:worker": "dotenv -e .env -- ts-node src/worker.ts",
-    "start:client": "dotenv -e .env -- ts-node src/client.ts"
+    "start:worker": "dotenv -e .env -- ts-node ./src/worker.ts",
+    "start:client": "dotenv -e .env -- ts-node ./src/client.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "devDependencies": {
+    "dotenv-cli": "^7.4.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@temporalio/client": "^1.11.0",
+    "@temporalio/worker": "^1.11.0"
+  }
 }
