@@ -1,3 +1,4 @@
+// src/check.ts
 import { Connection } from '@temporalio/client';
 
 async function main() {
@@ -9,10 +10,12 @@ async function main() {
     throw new Error('Missing TEMPORAL_ADDRESS / TEMPORAL_NAMESPACE / TEMPORAL_API_KEY');
   }
 
+  console.log('About to connect →', { address, namespace });
+
   const conn = await Connection.connect({
     address,
     tls: {},
-    // Older SDKs: pass API key in gRPC metadata
+    // Older SDKs use metadata for API key auth:
     metadata: { authorization: `Bearer ${apiKey}` },
   });
 
