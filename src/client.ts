@@ -1,18 +1,36 @@
+cat > src/client.ts <<'EOF'
 import { Client, Connection } from '@temporalio/client';
 
-export async function getClient() {
-  const address = process.env.TEMPORAL_ADDRESS!;
+async function main() {
+  const address   = process.env.TEMPORAL_ADDRESS!;
   const namespace = process.env.TEMPORAL_NAMESPACE!;
-  const apiKey = process.env.TEMPORAL_API_KEY!;
+  const apiKey    = process.env.TEMPORAL_API_KEY!;
+  const taskQueue = process.env.TEMPORAL_TASK_QUEUE || 'sms-orchestrator';
 
   const connection = await Connection.connect({
     address,
-    tls: {}, // Temporal Cloud uses TLS
-    // Most Node SDKs today use headers for API key auth:
-    metadata: { authorization: `Bearer ${apiKey}` },
-    // If your SDK supports the typed option instead, use:
-    // auth: { type: 'apiKey', apiKey }
+    // If your SDK supports the typed option, uncomment next line and remove metadata below:
+    // auth: { type: 'apiKey', apiKey },
+    // Otherwise use header-based auth:
+    metadata: { 'authorization': `Bearer ${apiKey}` },
   });
 
-  return new Client({ connection, namespace });
+  const client = new Client({ connection, namespace });
+
+  // Kick off a tiny test workflow
+  const handle = await client.workflow.start('helloWorkflow', {
+    taskQueue,
+    workflowId: `hello-${Date.now()}`,
+    args: ['Cristian'],
+  });
+
+  console.log('🚀 Started workflow:', handle.workflowId);
+  const result = await handle.result();
+  console.log('✅ Result:', result);
 }
+
+main().catch((err) => {
+  console.error('Client failed:', err);
+  process.exit(1);
+});
+EOF
