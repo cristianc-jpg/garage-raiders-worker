@@ -1,14 +1,15 @@
+cat > tsconfig.json <<'EOF'
 {
   "compilerOptions": {
-    "target": "ES2021",
+    "target": "ES2020",
     "module": "CommonJS",
-    "moduleResolution": "Node16",
-    "lib": ["ES2021"],
-    "outDir": "dist",
-    "rootDir": "src",
+    "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "lib",
+    "types": ["node"]
   },
   "include": ["src"]
 }
+EOF
