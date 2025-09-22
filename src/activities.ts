@@ -1,7 +1,6 @@
-// Put your non-deterministic work here (DB calls, HTTP, etc.)
-
-export async function pingOwner(phone: string, note?: string) {
-  console.log(`[activity] pingOwner -> ${phone} (${note || 'no note'})`);
-  // later: call your /api/reply or Twilio directly, etc.
-  return true;
+cat > src/activities.ts <<'EOF'
+/** Placeholder activities file; add real ones later. */
+export async function noop(): Promise<string> {
+  return 'ok';
 }
+EOF
