@@ -1,4 +1,3 @@
-cat > tsconfig.json <<'EOF'
 {
   "compilerOptions": {
     "target": "ES2020",
@@ -7,9 +6,9 @@ cat > tsconfig.json <<'EOF'
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "types": ["node"],
     "outDir": "lib",
-    "types": ["node"]
+    "verbatimModuleSyntax": false
   },
   "include": ["src"]
 }
-EOF
