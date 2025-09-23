@@ -1,4 +1,3 @@
-// src/worker.ts
 import { Worker, NativeConnection } from '@temporalio/worker';
 import * as workflows from './workflows';
 import { activities } from './activities';
@@ -14,7 +13,7 @@ async function run() {
     throw new Error('Missing one of: TEMPORAL_ADDRESS, TEMPORAL_NAMESPACE, TEMPORAL_API_KEY');
   }
 
-  // Use Cloud hostname:port + TLS + API Key in Authorization header
+  // Temporal Cloud: TLS + API key in Authorization header
   const connection = await NativeConnection.connect({
     address,
     tls: {},
@@ -25,7 +24,6 @@ async function run() {
     connection,
     namespace,
     taskQueue,
-    // important: point to your compiled/bundled workflows file
     workflowsPath: require.resolve('./workflows'),
     activities,
   });
