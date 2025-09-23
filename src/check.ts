@@ -1,4 +1,3 @@
-// src/check.ts
 import { Connection } from '@temporalio/client';
 
 const address   = process.env.TEMPORAL_ADDRESS || '';
@@ -17,7 +16,6 @@ const apiKey    = process.env.TEMPORAL_API_KEY || '';
     metadata: { authorization: `Bearer ${apiKey}` },
   });
 
-  // simple RPC
   await conn.getWorkflowService().getSystemInfo({});
   console.log('✅ Temporal connection OK');
   process.exit(0);
