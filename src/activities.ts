@@ -1,4 +1,6 @@
-export async function ping(msg: string): Promise<string> {
-  console.log('activity ping:', msg);
-  return `pong: ${msg}`;
-}
+export const activities = {
+  echo(msg: string) {
+    console.log('activity.echo ->', msg);
+    return `echo: ${msg}`;
+  }
+};
