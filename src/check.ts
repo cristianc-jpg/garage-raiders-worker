@@ -1,3 +1,4 @@
+cat > src/check.ts <<'EOF'
 // ~/garage-raiders-worker/src/check.ts
 import { Connection } from '@temporalio/client';
 
@@ -18,7 +19,7 @@ const apiKey    = process.env.TEMPORAL_API_KEY || '';
     metadata: { authorization: `Bearer ${apiKey}` },
   });
 
-  // Minimal RPC proves connectivity & auth
+  // ✅ This is the correct property on current SDKs
   await conn.workflowService.getSystemInfo({});
   console.log('✅ Temporal connection OK');
   process.exit(0);
@@ -26,3 +27,4 @@ const apiKey    = process.env.TEMPORAL_API_KEY || '';
   console.error('❌ Temporal connection failed:', e);
   process.exit(1);
 });
+EOF
