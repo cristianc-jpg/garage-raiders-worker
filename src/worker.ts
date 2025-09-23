@@ -1,4 +1,3 @@
-cat > src/worker.ts <<'EOF'
 // ~/garage-raiders-worker/src/worker.ts
 import { Worker, NativeConnection } from '@temporalio/worker';
 import * as workflows from './workflows';
@@ -27,7 +26,7 @@ async function run() {
     namespace,
     taskQueue,
     workflowsPath: require.resolve('./workflows'),
-    activities, // pass the entire module
+    activities, // <-- the entire module object (names → functions)
   });
 
   await worker.run();
@@ -37,4 +36,3 @@ run().catch((err) => {
   console.error('Worker fatal:', err);
   process.exit(1);
 });
-EOF
