@@ -10,13 +10,15 @@ const apiKey    = process.env.TEMPORAL_API_KEY || '';
     throw new Error('Missing envs (ADDRESS / NAMESPACE / API_KEY)');
   }
 
+  // Use Authorization header for Temporal Cloud
   const conn = await Connection.connect({
     address,
     tls: {},
     metadata: { authorization: `Bearer ${apiKey}` },
   });
 
-  await conn.getWorkflowService().getSystemInfo({});
+  // Minimal RPC to verify connectivity/auth
+  await conn.workflowService.getSystemInfo({});
   console.log('✅ Temporal connection OK');
   process.exit(0);
 })().catch((e) => {
