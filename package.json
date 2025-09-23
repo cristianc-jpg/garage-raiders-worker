@@ -6,11 +6,13 @@
     "check": "dotenv -e .env -- ts-node ./src/check.ts",
     "start:worker": "dotenv -e .env -- ts-node ./src/worker.ts"
   },
-  "dependencies": {
-    "@temporalio/client": "^1.9.3",
-    "@temporalio/worker": "^1.9.3",
+  "devDependencies": {
+    "dotenv-cli": "^7.4.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3",
-    "dotenv-cli": "^7.4.2"
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@temporalio/client": "^1.10.0",
+    "@temporalio/worker": "^1.10.0"
   }
 }
