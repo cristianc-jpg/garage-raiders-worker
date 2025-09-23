@@ -1,4 +1,4 @@
-// src/check.ts
+// ~/garage-raiders-worker/src/check.ts
 import { Connection } from '@temporalio/client';
 
 const address   = process.env.TEMPORAL_ADDRESS || '';
@@ -11,7 +11,7 @@ const apiKey    = process.env.TEMPORAL_API_KEY || '';
     throw new Error('Missing envs (ADDRESS / NAMESPACE / API_KEY)');
   }
 
-  // Temporal Cloud: TLS + API key in Authorization header
+  // Temporal Cloud: TLS + API key via Authorization header
   const conn = await Connection.connect({
     address,
     tls: {},
