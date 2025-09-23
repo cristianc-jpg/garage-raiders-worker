@@ -1,6 +1,7 @@
+// ~/garage-raiders-worker/src/worker.ts
 import { Worker, NativeConnection } from '@temporalio/worker';
 import * as workflows from './workflows';
-import { activities } from './activities';
+import * as activities from './activities';
 
 const address   = process.env.TEMPORAL_ADDRESS || '';
 const namespace = process.env.TEMPORAL_NAMESPACE || '';
@@ -13,7 +14,7 @@ async function run() {
     throw new Error('Missing one of: TEMPORAL_ADDRESS, TEMPORAL_NAMESPACE, TEMPORAL_API_KEY');
   }
 
-  // Temporal Cloud: TLS + API key in Authorization header
+  // Temporal Cloud connection: TLS + API key in Authorization header
   const connection = await NativeConnection.connect({
     address,
     tls: {},
@@ -25,7 +26,7 @@ async function run() {
     namespace,
     taskQueue,
     workflowsPath: require.resolve('./workflows'),
-    activities,
+    activities, // <-- the entire module object (names → functions)
   });
 
   await worker.run();
